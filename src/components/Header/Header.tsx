@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import './header.scss';
+
+function setActive({ isActive }: { isActive: boolean }): string {
+  return isActive ? 'header-link_active' : 'header-link';
+}
 
 export class Header extends Component {
   render() {
     return (
       <header className="header">
-        <div className="container">
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
+        <div className="header__container">
+          <NavLink to="/" className={setActive}>
+            Home
+          </NavLink>
+          <NavLink to="/about" className={setActive}>
+            About
+          </NavLink>
         </div>
       </header>
     );
