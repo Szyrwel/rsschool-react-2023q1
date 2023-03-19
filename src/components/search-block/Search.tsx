@@ -26,7 +26,7 @@ export class Search extends Component {
 
   render() {
     return (
-      <div>
+      <div className="search">
         <input
           type="text"
           placeholder="Search"
