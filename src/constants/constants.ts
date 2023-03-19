@@ -4,7 +4,7 @@ export const BOOKS_ON_SALE: Book[] = [
   {
     category: 'classic',
     id: 1,
-    title: 'Greatest Works of Oscar Wilde (DELUXE HARDBOUND EDITION)',
+    title: 'Greatest Works of Oscar Wilde',
     author: 'Oscar Wilde',
     price: 42.43,
     urlToImages: [

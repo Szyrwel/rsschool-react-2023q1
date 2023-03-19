@@ -1,12 +1,19 @@
+import { Card } from 'components/card/Card';
 import { Search } from 'components/search-block/Search';
+import { BOOKS_ON_SALE } from 'constants/constants';
 import React, { Component } from 'react';
+import './main-page.scss';
 
 export class MainPage extends Component {
   render() {
     return (
-      <div>
+      <div className="main__container">
         <Search />
-        <p>This is MainPage</p>
+        <div className="products">
+          {BOOKS_ON_SALE.map((book, index) => (
+            <Card key={index} product={book} />
+          ))}
+        </div>
       </div>
     );
   }
