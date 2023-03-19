@@ -8,7 +8,7 @@ export class Layout extends Component {
     return (
       <>
         <Header />
-        <main className="container">
+        <main className="main__container">
           <Outlet />
         </main>
       </>
