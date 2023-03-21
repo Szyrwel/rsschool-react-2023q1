@@ -8,7 +8,7 @@ function setActive({ isActive }: { isActive: boolean }): string {
 }
 
 export class Header extends Component {
-  render() {
+  render(): JSX.Element {
     return (
       <header className="header">
         <div className="header__container">

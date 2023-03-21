@@ -7,7 +7,7 @@ type PropsType = {
 };
 
 export class Card extends Component<PropsType> {
-  render() {
+  render(): JSX.Element {
     const { author, price, rating, title, urlToImages } = this.props.product;
     return (
       <li className="products__item product">

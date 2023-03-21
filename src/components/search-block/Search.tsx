@@ -24,7 +24,7 @@ export class Search extends Component {
     this.setState({ inputValue: event.target.value });
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="search">
         <input

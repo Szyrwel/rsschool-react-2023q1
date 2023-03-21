@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import './main-page.scss';
 
 export class MainPage extends Component {
-  render() {
+  render(): JSX.Element {
     return (
       <div className="main__container">
         <Search />

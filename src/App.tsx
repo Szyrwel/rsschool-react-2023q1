@@ -6,10 +6,10 @@ import { AboutPage } from 'pages/about/AboutPage';
 import { NotFoundPage } from 'pages/not-found/NotFoundPage';
 import { Layout } from './components/layout/Layout';
 
-class App extends Component {
-  render() {
+export class App extends Component {
+  render(): JSX.Element {
     return (
-      <div>
+      <>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<MainPage />} />
@@ -17,9 +17,7 @@ class App extends Component {
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
-      </div>
+      </>
     );
   }
 }
-
-export default App;

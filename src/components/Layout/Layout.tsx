@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import './layout.scss';
 
 export class Layout extends Component {
-  render() {
+  render(): JSX.Element {
     return (
       <>
         <Header />
