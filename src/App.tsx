@@ -4,7 +4,7 @@ import './App.css';
 import { MainPage } from 'pages/main/MainPage';
 import { AboutPage } from 'pages/about/AboutPage';
 import { NotFoundPage } from 'pages/not-found/NotFoundPage';
-import { Layout } from './components/Layout/Layout';
+import { Layout } from './components/layout/Layout';
 
 class App extends Component {
   render() {

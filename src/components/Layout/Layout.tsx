@@ -1,4 +1,4 @@
-import { Header } from '../Header/Header';
+import { Header } from '../header/Header';
 import React, { Component } from 'react';
 import { Outlet } from 'react-router-dom';
 import './layout.scss';
