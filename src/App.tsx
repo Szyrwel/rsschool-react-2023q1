@@ -4,6 +4,7 @@ import './App.css';
 import { MainPage } from 'pages/main/MainPage';
 import { AboutPage } from 'pages/about/AboutPage';
 import { NotFoundPage } from 'pages/not-found/NotFoundPage';
+import { FormPage } from 'pages/forms/FormPage';
 import { Layout } from './components/layout/Layout';
 
 export class App extends Component {
@@ -13,6 +14,7 @@ export class App extends Component {
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="about" element={<AboutPage />} />
+          <Route path="form" element={<FormPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

@@ -18,6 +18,9 @@ export class Header extends Component {
           <NavLink to="/about" className={setActive}>
             About
           </NavLink>
+          <NavLink to="/form" className={setActive}>
+            Form
+          </NavLink>
         </div>
       </header>
     );
