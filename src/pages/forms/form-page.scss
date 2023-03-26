@@ -8,14 +8,44 @@
   align-items: center;
   justify-content: center;
 }
-
-.error {
-  color: red;
-  height: 20px;
+.input {
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+  &__title {
+    margin: 0 0 3px;
+  }
+  &__error {
+    color: red;
+    margin-left: 20px;
+  }
 }
 
 .btn__submit {
   margin-top: 10px;
   align-self: flex-end;
   width: 120px;
+}
+
+.select {
+  display: block;
+  font-size: 15px;
+  width: 322px;
+  padding: 10px;
+  border: 1px solid #cecece;
+  background: #f6f6f6;
+  border-radius: 8px;
+  /* line-height: 1.9; */
+  border: 1px solid #cecece;
+  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+  border-radius: 0.5em;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #f6f6f6;
+  background-image: url(../../assets/icons/arrow-select.svg);
+  background-repeat: no-repeat, repeat;
+  background-position: right 0.7em top 50%, 0 0;
+  background-size: 0.65em auto, 100%;
 }

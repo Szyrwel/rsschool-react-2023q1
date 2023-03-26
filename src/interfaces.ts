@@ -16,3 +16,8 @@ export interface Book {
   description: string;
   amount: number;
 }
+
+export interface Country {
+  name: string;
+  code: string;
+}
