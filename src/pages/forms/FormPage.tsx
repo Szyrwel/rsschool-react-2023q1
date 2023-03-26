@@ -1,76 +1,67 @@
-import React, { Component, createRef, MouseEvent } from 'react';
+import React, { Component, FormEventHandler } from 'react';
 import './form-page.scss';
+import { ERROR_MESSAGE, ErrorsType } from './interface';
 
-type StateTypes = {
-  onSubmit: boolean;
-  inputText: string;
-  errors: ErrorsType;
+type FormFields = {
+  name: HTMLInputElement;
+  date: HTMLInputElement;
 };
-
-type ErrorsType = {
-  inputText: boolean;
-};
-
-enum ERROR_MESSAGE {
-  inputText = 'Please, enter your name',
-}
 
 export class FormPage extends Component {
-  state: StateTypes = {
-    onSubmit: false,
-    inputText: '',
-    errors: {
-      inputText: false,
-    },
+  state: ErrorsType = {
+    inputText: false,
+    inputDate: false,
   };
 
-  inputTextRef: React.RefObject<HTMLInputElement> =
-    createRef<HTMLInputElement>();
-
-  handleChange = (): void => {
-    this.setState({
-      inputText: this.inputTextRef.current?.value,
-    });
+  validationInputText = (value: string) => {
+    return !(value && value.length !== 0);
   };
 
-  validationInputText = (e: MouseEvent, value: string) => {
+  validationInputDate = (value: string) => {
+    return !value;
+  };
+
+  validationForm: FormEventHandler<HTMLFormElement & FormFields> = (e) => {
     e.preventDefault();
-    this.setState({ onSubmit: true });
-    console.log(this.state.inputText);
+    const form = e.currentTarget;
+    const { name, date } = form;
 
-    if (value.length === 0) {
-      this.setState({ errors: { inputText: true } });
-    } else {
-      this.setState({ errors: { inputText: false } });
-    }
+    const textIsValidated = this.validationInputText(name.value);
+    const dateIsValidated = this.validationInputDate(date.value);
+    console.log(textIsValidated);
+    console.log(dateIsValidated);
+
+    this.setState({
+      inputText: textIsValidated,
+      inputDate: dateIsValidated,
+    });
+    console.log(this.state);
   };
-
-  // createCard = () => {};
 
   render() {
-    const { onSubmit, errors, inputText } = this.state;
+    const { inputText, inputDate } = this.state;
 
     return (
-      <form className="form">
+      <form className="form" onSubmit={this.validationForm}>
         <label className="label">
           <p>Name</p>
-          <input
-            ref={this.inputTextRef}
-            placeholder="Name"
-            type="text"
-            value={inputText}
-            onChange={this.handleChange}
-          />
+          <input placeholder="Name" type="text" name="name" />
         </label>
-        {onSubmit && errors.inputText ? (
+        {inputText ? (
           <div className="error">{ERROR_MESSAGE.inputText}</div>
         ) : (
           <div className="error"></div>
         )}
-        <button
-          className="btn__submit"
-          onClick={(e) => this.validationInputText(e, inputText)}
-        >
+        <label className="label">
+          <p>Your birthday</p>
+          <input type="date" name="date" />
+        </label>
+        {inputDate ? (
+          <div className="error">{ERROR_MESSAGE.inputDate}</div>
+        ) : (
+          <div className="error"></div>
+        )}
+        <button type="submit" className={'btn__submit'}>
           Create card
         </button>
       </form>
