@@ -28,6 +28,7 @@ export class Search extends Component {
     return (
       <div className="search">
         <input
+          className="search__input"
           type="text"
           placeholder="Search"
           value={this.state.inputValue}

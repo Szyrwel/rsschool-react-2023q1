@@ -1,73 +1,87 @@
 import { COUNTRY } from 'constants/constants';
-import React, { Component, FormEventHandler } from 'react';
-// import { CardForm } from './CardForm';
+import React, { Component, createRef, FormEventHandler } from 'react';
 import './form-page.scss';
-import { ERROR_MESSAGE, ErrorsType, FormFields } from './interface';
+import { ERROR_MESSAGE, FormType } from './interface';
+import { validationInputText, validationInputDate } from './utilsForValidation';
 
 export class FormPage extends Component {
-  state: ErrorsType = {
-    inputText: false,
-    inputDate: false,
-    selectCountry: false,
+  state: FormType = {
+    errors: {
+      inputTextError: false,
+      inputDateError: false,
+      selectCountryError: false,
+    },
   };
+  inputTextRef = createRef<HTMLInputElement>();
+  inputDateRef = createRef<HTMLInputElement>();
+  inputSelectRef = createRef<HTMLSelectElement>();
 
-  validationInputText = (value: string) => {
-    return !(value && value.length !== 0);
-  };
-
-  validationInputDate = (value: string) => {
-    return !value;
-  };
-
-  validationForm: FormEventHandler<HTMLFormElement & FormFields> = (e) => {
+  validationForm: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    const { name, date, country } = form;
 
-    const textIsValidated = this.validationInputText(name.value);
-    const dateIsValidated = this.validationInputDate(date.value);
-    const countryIsValidated = this.validationInputDate(country.value);
+    const textIsValidated = validationInputText(
+      this.inputTextRef.current?.value
+    );
+    const dateIsValidated = validationInputDate(
+      this.inputDateRef.current?.value
+    );
+    const countryIsValidated = validationInputDate(
+      this.inputSelectRef.current?.value
+    );
 
     this.setState({
-      inputText: textIsValidated,
-      inputDate: dateIsValidated,
-      selectCountry: countryIsValidated,
+      errors: {
+        inputTextError: textIsValidated,
+        inputDateError: dateIsValidated,
+        selectCountryError: countryIsValidated,
+      },
     });
-    console.log(this.state);
   };
 
   render() {
-    const { inputText, inputDate, selectCountry } = this.state;
+    const { errors } = this.state;
+    const { inputTextError, inputDateError, selectCountryError } = errors;
 
     return (
       <>
         <form className="form" onSubmit={this.validationForm}>
-          <div className="input input-container">
+          <div className="input-container">
             <div>
               <span className="input__title">Name</span>
-              {inputText ? (
+              {inputTextError ? (
                 <span className="input__error">{ERROR_MESSAGE.inputText}</span>
               ) : (
                 <span className="error"></span>
               )}
             </div>
-            <input placeholder="Name" type="text" name="name" />
+            <input
+              ref={this.inputTextRef}
+              className="input"
+              placeholder="Name"
+              type="text"
+              name="name"
+            />
           </div>
-          <div className="input input-container">
+          <div className="input-container">
             <div>
               <span className="input__title">Your birthday</span>
-              {inputDate ? (
+              {inputDateError ? (
                 <span className="input__error">{ERROR_MESSAGE.inputDate}</span>
               ) : (
                 <span className="error"></span>
               )}
             </div>
-            <input type="date" name="date" />
+            <input
+              ref={this.inputDateRef}
+              className="input"
+              type="date"
+              name="date"
+            />
           </div>
-          <div className="input input-container">
+          <div className="input-container">
             <div>
               <span className="input__title">Your country</span>
-              {selectCountry ? (
+              {selectCountryError ? (
                 <span className="input__error">
                   {ERROR_MESSAGE.selectCountry}
                 </span>
@@ -75,7 +89,7 @@ export class FormPage extends Component {
                 <span className="error"></span>
               )}
             </div>
-            <select name="country" className="select">
+            <select ref={this.inputSelectRef} name="country" className="select">
               {COUNTRY.map(({ name, code }) => (
                 <option key={code} value={name}>
                   {name}
