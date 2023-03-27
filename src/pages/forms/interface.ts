@@ -3,6 +3,7 @@ export type FormType = {
     inputTextError: boolean;
     inputDateError: boolean;
     selectCountryError: boolean;
+    inputRadioError: boolean;
   };
 };
 

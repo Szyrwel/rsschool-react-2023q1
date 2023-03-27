@@ -2,7 +2,11 @@ import { COUNTRY } from 'constants/constants';
 import React, { Component, createRef, FormEventHandler } from 'react';
 import './form-page.scss';
 import { ERROR_MESSAGE, FormType } from './interface';
-import { validationInputText, validationInputDate } from './utilsForValidation';
+import {
+  validationInputText,
+  validationInputDate,
+  validationInputRadio,
+} from './utilsForValidation';
 
 export class FormPage extends Component {
   state: FormType = {
@@ -10,11 +14,15 @@ export class FormPage extends Component {
       inputTextError: false,
       inputDateError: false,
       selectCountryError: false,
+      inputRadioError: false,
     },
   };
+
   inputTextRef = createRef<HTMLInputElement>();
   inputDateRef = createRef<HTMLInputElement>();
   inputSelectRef = createRef<HTMLSelectElement>();
+  inputRadioMale = createRef<HTMLInputElement>();
+  inputRadioFemale = createRef<HTMLInputElement>();
 
   validationForm: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -29,18 +37,29 @@ export class FormPage extends Component {
       this.inputSelectRef.current?.value
     );
 
+    const genderIsValidated = validationInputRadio(
+      this.inputRadioMale.current?.checked,
+      this.inputRadioFemale.current?.checked
+    );
+
     this.setState({
       errors: {
         inputTextError: textIsValidated,
         inputDateError: dateIsValidated,
         selectCountryError: countryIsValidated,
+        inputRadioError: genderIsValidated,
       },
     });
   };
 
   render() {
     const { errors } = this.state;
-    const { inputTextError, inputDateError, selectCountryError } = errors;
+    const {
+      inputTextError,
+      inputDateError,
+      selectCountryError,
+      inputRadioError,
+    } = errors;
 
     return (
       <>
@@ -97,7 +116,26 @@ export class FormPage extends Component {
               ))}
             </select>
           </div>
-
+          <div className="input-container">
+            <div>
+              <span className="input__title">Your gender</span>
+              {inputRadioError ? (
+                <span className="input__error">{ERROR_MESSAGE.inputRadio}</span>
+              ) : (
+                <span className="error"></span>
+              )}
+            </div>
+            <div className="radio">
+              <label>
+                <input type="radio" name="radio" ref={this.inputRadioMale} />
+                Male
+              </label>
+              <label>
+                <input type="radio" name="radio" ref={this.inputRadioFemale} />
+                Female
+              </label>
+            </div>
+          </div>
           <button type="submit" className={'btn__submit'}>
             Create card
           </button>
