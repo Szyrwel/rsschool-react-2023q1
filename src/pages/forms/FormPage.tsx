@@ -15,6 +15,7 @@ export class FormPage extends Component {
       inputDateError: false,
       selectCountryError: false,
       inputRadioError: false,
+      inputFileError: false,
     },
   };
 
@@ -23,10 +24,10 @@ export class FormPage extends Component {
   inputSelectRef = createRef<HTMLSelectElement>();
   inputRadioMale = createRef<HTMLInputElement>();
   inputRadioFemale = createRef<HTMLInputElement>();
+  inputFile = createRef<HTMLInputElement>();
 
   validationForm: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-
     const textIsValidated = validationInputText(
       this.inputTextRef.current?.value
     );
@@ -36,10 +37,12 @@ export class FormPage extends Component {
     const countryIsValidated = validationInputDate(
       this.inputSelectRef.current?.value
     );
-
     const genderIsValidated = validationInputRadio(
       this.inputRadioMale.current?.checked,
       this.inputRadioFemale.current?.checked
+    );
+    const avatarIsValidated = validationInputDate(
+      this.inputFile.current?.value
     );
 
     this.setState({
@@ -48,6 +51,7 @@ export class FormPage extends Component {
         inputDateError: dateIsValidated,
         selectCountryError: countryIsValidated,
         inputRadioError: genderIsValidated,
+        inputFileError: avatarIsValidated,
       },
     });
   };
@@ -59,6 +63,7 @@ export class FormPage extends Component {
       inputDateError,
       selectCountryError,
       inputRadioError,
+      inputFileError,
     } = errors;
 
     return (
@@ -115,6 +120,34 @@ export class FormPage extends Component {
                 </option>
               ))}
             </select>
+          </div>
+          <div className="input-container">
+            <div>
+              <span className="input__title"></span>
+            </div>
+            <div
+              className="input-file-container"
+              style={{
+                width: '320px',
+              }}
+            >
+              <input
+                type="file"
+                name="file"
+                className="input-file"
+                id="file"
+                ref={this.inputFile}
+              />
+              <label className="label-file" htmlFor="file">
+                <span className="label-file__icon"></span>
+                <span className="label-file__text">Upload image</span>
+              </label>
+              {inputFileError ? (
+                <span className="input__error">{ERROR_MESSAGE.inputFile}</span>
+              ) : (
+                <span className="error"></span>
+              )}
+            </div>
           </div>
           <div className="input-container">
             <div>

@@ -4,6 +4,7 @@ export type FormType = {
     inputDateError: boolean;
     selectCountryError: boolean;
     inputRadioError: boolean;
+    inputFileError: boolean;
   };
 };
 
@@ -12,4 +13,5 @@ export enum ERROR_MESSAGE {
   inputDate = 'Please, choose date',
   selectCountry = 'Please, choose country',
   inputRadio = 'Please, choose your sex',
+  inputFile = 'Please, upload file ',
 }
