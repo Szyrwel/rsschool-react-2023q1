@@ -1,7 +1,7 @@
 import { COUNTRY } from 'constants/constants';
 import React, { Component, createRef, FormEventHandler } from 'react';
 import './form-page.scss';
-import { ERROR_MESSAGE, FormType } from './interface';
+import { ERROR_MESSAGE, FormType, Card } from './interface';
 import {
   validationInputText,
   validationInputDate,
@@ -12,6 +12,7 @@ import {
 export class FormPage extends Component {
   state: FormType = {
     errors: {
+      formError: true,
       inputTextError: false,
       inputDateError: false,
       selectCountryError: false,
@@ -19,6 +20,7 @@ export class FormPage extends Component {
       inputFileError: false,
       inputCheckboxError: false,
     },
+    cards: [],
   };
 
   inputTextRef = createRef<HTMLInputElement>();
@@ -31,7 +33,13 @@ export class FormPage extends Component {
 
   validationForm: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log(this.inputCheckbox.current?.checked);
+    const card: Card = {
+      name: '',
+      country: '',
+      pathToAvatar: '',
+      date: '',
+      sex: '',
+    };
 
     const textIsValidated = validationInputText(
       this.inputTextRef.current?.value
@@ -53,8 +61,49 @@ export class FormPage extends Component {
       this.inputCheckbox.current?.checked
     );
 
+    const formIsValidated = [
+      textIsValidated,
+      dateIsValidated,
+      countryIsValidated,
+      genderIsValidated,
+      avatarIsValidated,
+      checkboxIsValidated,
+    ].every((el) => !el);
+    const cards: Card[] = this.state.cards;
+
+    if (formIsValidated) {
+      card.name = this.inputTextRef.current?.value as string;
+      card.country = this.inputSelectRef.current?.value as string;
+      card.date = this.inputDateRef.current?.value as string;
+      card.pathToAvatar = this.inputFile.current?.value as string;
+      card.sex = this.inputRadioMale.current?.checked ? 'Male' : 'Female';
+      cards.push(card);
+      if (this.inputTextRef.current instanceof HTMLInputElement) {
+        this.inputTextRef.current.value = '';
+      }
+      if (this.inputDateRef.current instanceof HTMLInputElement) {
+        this.inputDateRef.current.value = '';
+      }
+      if (this.inputFile.current instanceof HTMLInputElement) {
+        this.inputFile.current.value = '';
+      }
+      if (this.inputSelectRef.current instanceof HTMLSelectElement) {
+        this.inputSelectRef.current.value = '';
+      }
+      if (this.inputRadioMale.current instanceof HTMLInputElement) {
+        this.inputRadioMale.current.checked = false;
+      }
+      if (this.inputRadioFemale.current instanceof HTMLInputElement) {
+        this.inputRadioFemale.current.checked = false;
+      }
+      if (this.inputCheckbox.current instanceof HTMLInputElement) {
+        this.inputCheckbox.current.checked = false;
+      }
+    }
+
     this.setState({
       errors: {
+        formError: formIsValidated,
         inputTextError: textIsValidated,
         inputDateError: dateIsValidated,
         selectCountryError: countryIsValidated,
@@ -62,7 +111,10 @@ export class FormPage extends Component {
         inputFileError: avatarIsValidated,
         inputCheckboxError: checkboxIsValidated,
       },
+      cards: cards,
     });
+
+    console.log(this.state.cards);
   };
 
   render() {

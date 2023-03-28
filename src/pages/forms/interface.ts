@@ -1,5 +1,6 @@
 export type FormType = {
   errors: {
+    formError: boolean;
     inputTextError: boolean;
     inputDateError: boolean;
     selectCountryError: boolean;
@@ -7,6 +8,7 @@ export type FormType = {
     inputFileError: boolean;
     inputCheckboxError: boolean;
   };
+  cards: Card[] | [];
 };
 
 export enum ERROR_MESSAGE {
@@ -17,3 +19,11 @@ export enum ERROR_MESSAGE {
   inputFile = 'Please, upload file ',
   inputCheckbox = 'Please, confirm card creation',
 }
+
+export type Card = {
+  name: string;
+  country: string;
+  pathToAvatar: string;
+  date: string;
+  sex: string;
+};
