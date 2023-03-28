@@ -5,6 +5,7 @@ export type FormType = {
     selectCountryError: boolean;
     inputRadioError: boolean;
     inputFileError: boolean;
+    inputCheckboxError: boolean;
   };
 };
 
@@ -14,4 +15,5 @@ export enum ERROR_MESSAGE {
   selectCountry = 'Please, choose country',
   inputRadio = 'Please, choose your sex',
   inputFile = 'Please, upload file ',
+  inputCheckbox = 'Please, confirm card creation',
 }

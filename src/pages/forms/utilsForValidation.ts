@@ -12,3 +12,7 @@ export function validationInputRadio(
 ) {
   return !(bool1 || bool2);
 }
+
+export function validationInputCheckbox(value: boolean | undefined) {
+  return !value;
+}

@@ -6,6 +6,7 @@ import {
   validationInputText,
   validationInputDate,
   validationInputRadio,
+  validationInputCheckbox,
 } from './utilsForValidation';
 
 export class FormPage extends Component {
@@ -16,6 +17,7 @@ export class FormPage extends Component {
       selectCountryError: false,
       inputRadioError: false,
       inputFileError: false,
+      inputCheckboxError: false,
     },
   };
 
@@ -25,9 +27,12 @@ export class FormPage extends Component {
   inputRadioMale = createRef<HTMLInputElement>();
   inputRadioFemale = createRef<HTMLInputElement>();
   inputFile = createRef<HTMLInputElement>();
+  inputCheckbox = createRef<HTMLInputElement>();
 
   validationForm: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    console.log(this.inputCheckbox.current?.checked);
+
     const textIsValidated = validationInputText(
       this.inputTextRef.current?.value
     );
@@ -44,6 +49,9 @@ export class FormPage extends Component {
     const avatarIsValidated = validationInputDate(
       this.inputFile.current?.value
     );
+    const checkboxIsValidated = validationInputCheckbox(
+      this.inputCheckbox.current?.checked
+    );
 
     this.setState({
       errors: {
@@ -52,6 +60,7 @@ export class FormPage extends Component {
         selectCountryError: countryIsValidated,
         inputRadioError: genderIsValidated,
         inputFileError: avatarIsValidated,
+        inputCheckboxError: checkboxIsValidated,
       },
     });
   };
@@ -64,6 +73,7 @@ export class FormPage extends Component {
       selectCountryError,
       inputRadioError,
       inputFileError,
+      inputCheckboxError,
     } = errors;
 
     return (
@@ -122,9 +132,6 @@ export class FormPage extends Component {
             </select>
           </div>
           <div className="input-container">
-            <div>
-              <span className="input__title"></span>
-            </div>
             <div
               className="input-file-container"
               style={{
@@ -167,6 +174,27 @@ export class FormPage extends Component {
                 <input type="radio" name="radio" ref={this.inputRadioFemale} />
                 Female
               </label>
+            </div>
+          </div>
+          <div className="input-container">
+            <div className="input-container_checkbox">
+              <span className="input__title">Create a card</span>
+              <label>
+                <input
+                  type="checkbox"
+                  name="checkbox"
+                  ref={this.inputCheckbox}
+                />
+              </label>
+              <div className="checkbox">
+                {inputCheckboxError ? (
+                  <span className="input__error">
+                    {ERROR_MESSAGE.inputCheckbox}
+                  </span>
+                ) : (
+                  <span className="error"></span>
+                )}
+              </div>
             </div>
           </div>
           <button type="submit" className={'btn__submit'}>
