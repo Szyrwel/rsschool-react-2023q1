@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+.card {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(213, 213, 213, 0.3);
+  border-radius: 10px;
+  width: 200px;
+  &__img {
+    width: 100%;
+    max-width: 150px;
+    height: 80px;
+    object-fit: contain;
+  }
+  &__discr {
+    display: flex;
+    flex-direction: column;
+  }
+}
