@@ -23,7 +23,7 @@ export enum ERROR_MESSAGE {
 export type Card = {
   name: string;
   country: string;
-  pathToAvatar: string;
+  pathToAvatar: File | undefined | null;
   date: string;
   sex: string;
 };

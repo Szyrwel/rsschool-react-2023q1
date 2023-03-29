@@ -13,7 +13,7 @@
 }
 
 .input {
-  width: 300px;
+  width: 320px;
   font-size: 15px;
   padding: 10px;
   border: 1px solid #cecece;
@@ -51,7 +51,7 @@
 .select {
   display: block;
   font-size: 15px;
-  width: 322px;
+  width: 320px;
   padding: 10px;
   border: 1px solid #cecece;
   background: #f6f6f6;
@@ -116,4 +116,9 @@
   width: 320px;
   display: flex;
   gap: 5px;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 20px;
 }

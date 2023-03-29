@@ -1,5 +1,7 @@
+import { FormCard } from 'components/form-card/FormCard';
 import { COUNTRY } from 'constants/constants';
 import React, { Component, createRef, FormEventHandler } from 'react';
+import { v1 } from 'uuid';
 import './form-page.scss';
 import { ERROR_MESSAGE, FormType, Card } from './interface';
 import {
@@ -22,6 +24,10 @@ export class FormPage extends Component {
     },
     cards: [],
   };
+  name = 'vmoiemboienbo';
+  sex = 'male';
+  age = '2020-09-08';
+  country = 'Amvidmviodn bnebneirnb';
 
   inputTextRef = createRef<HTMLInputElement>();
   inputDateRef = createRef<HTMLInputElement>();
@@ -30,13 +36,14 @@ export class FormPage extends Component {
   inputRadioFemale = createRef<HTMLInputElement>();
   inputFile = createRef<HTMLInputElement>();
   inputCheckbox = createRef<HTMLInputElement>();
+  cards: Card[] = this.state.cards;
 
   validationForm: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const card: Card = {
       name: '',
       country: '',
-      pathToAvatar: '',
+      pathToAvatar: null,
       date: '',
       sex: '',
     };
@@ -69,15 +76,15 @@ export class FormPage extends Component {
       avatarIsValidated,
       checkboxIsValidated,
     ].every((el) => !el);
-    const cards: Card[] = this.state.cards;
-
     if (formIsValidated) {
       card.name = this.inputTextRef.current?.value as string;
       card.country = this.inputSelectRef.current?.value as string;
       card.date = this.inputDateRef.current?.value as string;
-      card.pathToAvatar = this.inputFile.current?.value as string;
+      if (this.inputFile.current?.files) {
+        card.pathToAvatar = this.inputFile.current?.files[0] as File;
+      }
       card.sex = this.inputRadioMale.current?.checked ? 'Male' : 'Female';
-      cards.push(card);
+      this.cards.push(card);
       if (this.inputTextRef.current instanceof HTMLInputElement) {
         this.inputTextRef.current.value = '';
       }
@@ -111,14 +118,14 @@ export class FormPage extends Component {
         inputFileError: avatarIsValidated,
         inputCheckboxError: checkboxIsValidated,
       },
-      cards: cards,
+      cards: this.cards,
     });
 
     console.log(this.state.cards);
   };
 
   render() {
-    const { errors } = this.state;
+    const { cards, errors } = this.state;
     const {
       inputTextError,
       inputDateError,
@@ -253,6 +260,13 @@ export class FormPage extends Component {
             Create card
           </button>
         </form>
+        {this.cards.length > 0 ? (
+          <div className="cards">
+            {cards.map((card: Card) => (
+              <FormCard key={v1()} card={card} />
+            ))}
+          </div>
+        ) : null}
       </>
     );
   }
