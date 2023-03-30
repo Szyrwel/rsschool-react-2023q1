@@ -1,25 +1,24 @@
 import { Card } from 'pages/forms/interface';
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './form-card.scss';
 
 type PropsType = {
   card: Card;
 };
 
-export class FormCard extends Component<PropsType> {
-  state = {
-    pathToAvatar: '',
-  };
+export function FormCard(props: PropsType) {
+  const { name, country, sex, date } = props.card;
+  const [newPathToAvatar, setPathToAvatar] = useState('');
 
-  componentDidMount(): void {
-    const { pathToAvatar } = this.props.card;
+  useEffect(() => {
+    const { pathToAvatar } = props.card;
     const fileReader = new FileReader();
 
     const getFile = () => {
       if (fileReader.result) {
         const fileStr = fileReader.result;
         if (typeof fileStr === 'string') {
-          this.setState({ pathToAvatar: fileStr });
+          setPathToAvatar(fileStr);
         }
       }
     };
@@ -28,29 +27,25 @@ export class FormCard extends Component<PropsType> {
       fileReader.readAsDataURL(pathToAvatar);
       fileReader.addEventListener('loadend', getFile);
     }
-  }
-  render() {
-    const { name, country, sex, date } = this.props.card;
-    const { pathToAvatar } = this.state;
+  }, [newPathToAvatar, props.card]);
 
-    return (
-      <div className="card">
-        <img src={pathToAvatar} className="card__img" />
-        <div className="card__discr">
-          <span>
-            <b>Name:</b> {name}
-          </span>
-          <span>
-            <b>Country:</b> {country}
-          </span>
-          <span>
-            <b>Sex:</b> {sex}
-          </span>
-          <span>
-            <b>Birthday:</b> {date}
-          </span>
-        </div>
+  return (
+    <div className="card">
+      <img src={newPathToAvatar} className="card__img" />
+      <div className="card__discr">
+        <span>
+          <b>Name:</b> {name}
+        </span>
+        <span>
+          <b>Country:</b> {country}
+        </span>
+        <span>
+          <b>Sex:</b> {sex}
+        </span>
+        <span>
+          <b>Birthday:</b> {date}
+        </span>
       </div>
-    );
-  }
+    </div>
+  );
 }
