@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export class AboutPage extends Component {
-  render(): JSX.Element {
-    return <div>This is AboutPage</div>;
-  }
+export function AboutPage() {
+  return <div>This is AboutPage</div>;
 }
