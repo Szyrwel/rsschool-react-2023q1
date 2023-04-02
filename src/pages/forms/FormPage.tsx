@@ -1,8 +1,7 @@
-import { FormCard } from 'components/form-card/FormCard';
+import { FormCardList } from 'components/form-card-list/FormCardList';
 import { COUNTRY } from 'constants/constants';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { v1 } from 'uuid';
 import './form-page.scss';
 import { ERROR_MESSAGE, Card, FormField } from './interface';
 
@@ -167,13 +166,7 @@ export function FormPage() {
           Create card
         </button>
       </form>
-      {formCards && (
-        <div className="cards">
-          {formCards.map((card: Card) => (
-            <FormCard key={v1()} card={card} />
-          ))}
-        </div>
-      )}
+      {formCards && <FormCardList cards={formCards} />}
     </>
   );
 }
