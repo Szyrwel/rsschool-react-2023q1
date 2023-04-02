@@ -31,7 +31,7 @@ export function FormPage() {
         ...formCards,
         {
           ...data,
-          pathToAvatar: URL.createObjectURL(data?.pathToAvatar?.[0]),
+          pathToAvatar: URL.createObjectURL(data.pathToAvatar?.[0]),
         },
       ]);
     }
