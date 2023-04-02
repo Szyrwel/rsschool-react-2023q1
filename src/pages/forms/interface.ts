@@ -20,10 +20,20 @@ export enum ERROR_MESSAGE {
   inputCheckbox = 'Please, confirm card creation',
 }
 
+export type FormField = {
+  name: string;
+  country: string;
+  pathToAvatar: FileList | null;
+  date: string;
+  sex: string;
+  checkbox: boolean;
+};
+
 export type Card = {
   name: string;
   country: string;
-  pathToAvatar: File | undefined | null;
+  pathToAvatar: string;
   date: string;
   sex: string;
+  checkbox: boolean;
 };

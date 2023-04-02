@@ -1,5 +1,5 @@
 import { Card } from 'pages/forms/interface';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './form-card.scss';
 
 type PropsType = {
@@ -7,31 +7,11 @@ type PropsType = {
 };
 
 export function FormCard(props: PropsType) {
-  const { name, country, sex, date } = props.card;
-  const [newPathToAvatar, setPathToAvatar] = useState('');
-
-  useEffect(() => {
-    const { pathToAvatar } = props.card;
-    const fileReader = new FileReader();
-
-    const getFile = () => {
-      if (fileReader.result) {
-        const fileStr = fileReader.result;
-        if (typeof fileStr === 'string') {
-          setPathToAvatar(fileStr);
-        }
-      }
-    };
-
-    if (pathToAvatar instanceof File) {
-      fileReader.readAsDataURL(pathToAvatar);
-      fileReader.addEventListener('loadend', getFile);
-    }
-  }, [newPathToAvatar, props.card]);
+  const { name, country, pathToAvatar, sex, date } = props.card;
 
   return (
     <div className="card">
-      <img src={newPathToAvatar} className="card__img" />
+      <img src={pathToAvatar} className="card__img" />
       <div className="card__discr">
         <span>
           <b>Name:</b> {name}
