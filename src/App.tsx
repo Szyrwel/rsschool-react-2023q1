@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import { MainPage } from 'pages/main/MainPage';
@@ -7,17 +7,15 @@ import { NotFoundPage } from 'pages/not-found/NotFoundPage';
 import { FormPage } from 'pages/forms/FormPage';
 import { Layout } from './components/layout/Layout';
 
-export class App extends Component {
-  render(): JSX.Element {
-    return (
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="form" element={<FormPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    );
-  }
+export function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<MainPage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="form" element={<FormPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
+  );
 }
