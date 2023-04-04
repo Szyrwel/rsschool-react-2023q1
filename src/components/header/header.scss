@@ -1,5 +1,10 @@
 .header {
-  background-color: #d0d0d0;
+  background: linear-gradient(
+    270deg,
+    #212653 -4.13%,
+    rgba(14, 16, 34, 0.8) 100%
+  );
+  background-color: #006e99;
   &__container {
     max-width: 1440px;
     margin: 0 auto;
@@ -7,7 +12,8 @@
     display: flex;
     justify-content: center;
     gap: 40px;
-    font-size: 20px;
+    font-family: 'Walter Turncoat', cursive;
+    font-size: 30px;
     font-weight: 800;
     letter-spacing: 1px;
     line-height: 120%;

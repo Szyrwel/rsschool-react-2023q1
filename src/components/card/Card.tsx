@@ -1,33 +1,22 @@
-import { Book } from 'interfaces';
+import { Character } from 'interfaces';
 import React from 'react';
 import './card.scss';
 
 type PropsType = {
-  product: Book;
+  character: Character;
 };
 
 export function Card(props: PropsType) {
-  const { author, price, rating, title, urlToImages } = props.product;
+  const { name, imageUrl } = props.character;
   return (
-    <li className="products__item product">
-      <div className="product__link">
+    <li className="character__item character">
+      <div className="character__link">
         <img
-          className="product__image"
-          src={urlToImages[0]}
-          alt="Book image"
-          style={{
-            width: '275px',
-            height: '340px',
-          }}
+          className="character__image"
+          src={imageUrl}
+          alt={`character name - ${name}`}
         />
-      </div>
-      <div className="product__footer">
-        <div className="product__desc">
-          <span className="product__title">{title}</span>
-          <span className="product__author">{author}</span>
-          <span className="product__raiting">{rating}</span>
-          <span className="product__price">$ {price.toFixed(2)}</span>
-        </div>
+        <span className="character__title">{name}</span>
       </div>
     </li>
   );

@@ -20,9 +20,9 @@ export function FormPage() {
   };
 
   return (
-    <>
+    <div className="main__container">
       <Form addCardsToFormCards={addCardsToFormCards} />
       {formCards && <FormCardList cards={formCards} />}
-    </>
+    </div>
   );
 }

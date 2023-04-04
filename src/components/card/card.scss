@@ -1,44 +1,31 @@
-.product {
+.character {
   display: flex;
-  flex-direction: column;
   width: 100%;
-
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  padding: 15px 0;
+  font-family: 'Walter Turncoat', cursive;
   &__link {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    row-gap: 15px;
     width: 100%;
     overflow: hidden;
   }
 
   &__image {
-    object-fit: contain;
     width: 100%;
+    max-width: 300px;
+    height: 150px;
+    object-fit: contain;
     transition: transform 1.5s ease;
   }
 
-  &__desc {
-    display: flex;
-    flex-direction: column;
-    padding: 0 20px;
-  }
-
   &__title {
-    font-size: 16px;
+    font-size: 25px;
     font-weight: 300;
     color: #293133;
-  }
-
-  &__author {
-    font-size: 14px;
-    font-weight: 300;
-  }
-
-  &__raiting {
-    background-image: url(../../assets/icons/star.svg);
-    background-repeat: no-repeat;
-    padding-left: 30px;
-    font-size: 14px;
-    font-weight: 300;
   }
 }
