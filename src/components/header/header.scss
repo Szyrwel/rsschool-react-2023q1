@@ -10,7 +10,8 @@
     margin: 0 auto;
     padding: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     gap: 40px;
     font-family: 'Walter Turncoat', cursive;
     font-size: 30px;
@@ -28,4 +29,17 @@
     text-decoration: none;
     text-shadow: 2px 2px #ffffff;
   }
+}
+
+.logo {
+  background-image: url(../../assets/icons/logo.svg);
+  background-repeat: no-repeat;
+  width: 153px;
+  height: 90px;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 45px;
 }

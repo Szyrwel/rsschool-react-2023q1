@@ -7,3 +7,7 @@ export async function getAllCharacters(url: string): Promise<Character[]> {
 
   return data.data;
 }
+
+// export async function getFilteredCharacters(url: string): Promise<Character[]> {
+//   const res = await fetch();
+// }

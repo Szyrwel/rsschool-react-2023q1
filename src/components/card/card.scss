@@ -13,6 +13,7 @@
     row-gap: 15px;
     width: 100%;
     overflow: hidden;
+    padding: 0 15px;
   }
 
   &__image {
@@ -20,12 +21,12 @@
     max-width: 300px;
     height: 150px;
     object-fit: contain;
-    transition: transform 1.5s ease;
   }
 
   &__title {
     font-size: 25px;
     font-weight: 300;
     color: #293133;
+    text-align: center;
   }
 }
