@@ -1,10 +1,24 @@
+import { ERROR_MESSAGE } from 'interfaces';
 import React, { ChangeEvent, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import './search.scss';
 
-export function Search() {
+type searchValue = { search: string };
+
+export function Search({
+  searchCharacters,
+}: {
+  searchCharacters: (value: string) => void;
+}) {
   const [inputValue, setInputValue] = useState(
     localStorage.getItem('inputValue') || ''
   );
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<searchValue>();
 
   function handleInputValue(event: ChangeEvent<HTMLInputElement>) {
     const currentInputValue = event.target.value;
@@ -12,15 +26,35 @@ export function Search() {
     setInputValue(currentInputValue);
   }
 
+  function handleSubmit1({ search }: { search: string }) {
+    console.log(search);
+
+    searchCharacters(search);
+  }
+
   return (
-    <div className="search">
+    <form
+      autoComplete="off"
+      className="search"
+      onSubmit={handleSubmit(handleSubmit1)}
+    >
       <input
         className="search__input"
-        type="text"
+        type="search"
         placeholder="Search"
         value={inputValue}
-        onChange={handleInputValue}
+        onInput={handleInputValue}
+        {...register('search', {
+          required: true,
+          minLength: 4,
+        })}
       />
-    </div>
+      <div>
+        <span className="search__error">
+          {errors.search && ERROR_MESSAGE.search}
+        </span>
+      </div>
+      <input type="submit" value="search" className="search__button" />
+    </form>
   );
 }

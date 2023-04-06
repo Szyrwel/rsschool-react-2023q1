@@ -1,5 +1,6 @@
 import { COUNTRY } from 'constants/constants';
-import { ERROR_MESSAGE, FormField } from 'pages/forms/interface';
+import { ERROR_MESSAGE } from 'interfaces';
+import { FormField } from 'pages/forms/interface';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -30,7 +31,7 @@ export function Form({
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit(onSubmit)}>
+    <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
       <div className="input-container">
         <div>
           <span className="input__title">Name</span>

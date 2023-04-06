@@ -26,4 +26,15 @@ export type ResponseModel = {
 };
 export enum ENDPOINT {
   allCharacters = '/characters',
+  filterCharacters = '/character?name=',
+}
+
+export enum ERROR_MESSAGE {
+  inputText = 'Please, enter your name',
+  inputDate = 'Please, choose date',
+  selectCountry = 'Please, choose country',
+  inputRadio = 'Please, choose your sex',
+  inputFile = 'Please, upload file ',
+  inputCheckbox = 'Please, confirm card creation',
+  search = 'Please, enter least 4 characters',
 }
