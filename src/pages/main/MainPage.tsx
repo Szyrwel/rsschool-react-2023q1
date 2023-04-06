@@ -1,47 +1,67 @@
-import { Card } from 'components/card/Card';
 import { Search } from 'components/search-block/Search';
 import React, { useEffect, useState } from 'react';
 import './main-page.scss';
-import { v1 } from 'uuid';
 import { Character } from 'interfaces';
 import { getAllCharacters, getFilteredCharacters } from 'api/Api';
 import { BASE_URL } from 'api/constants';
+import { Pagination } from 'components/pagination/Pagination';
 
 export function MainPage() {
-  const [characters, setCharacters] = useState<Character[]>([]);
   const [searchValue, setSearchValue] = useState(
     localStorage.getItem('inputValue') || ''
   );
+  const [characters, setCharacters] = useState<Character[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCarrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(0);
+  const [isFilteredCharacters, setIsFilteredCharacters] = useState(false);
+  const nextPage = (num: number) => setCarrentPage(num + 1);
+  const perPage = (num: number) => setCarrentPage(num - 1);
+
   useEffect(() => {
-    if (!searchValue) {
-      getAllCharacters(BASE_URL).then((data) => setCharacters(data));
+    if (!isFilteredCharacters) {
+      setLoading(true);
+      getAllCharacters(BASE_URL, currentPage).then((data) => {
+        setCharacters(data);
+        setLoading(false);
+      });
     }
-  }, [searchValue]);
+  }, [currentPage, isFilteredCharacters]);
 
   useEffect(() => {
-    getFilteredCharacters(BASE_URL, searchValue).then((data) => {
-      console.log(data);
+    if (!isFilteredCharacters) {
+      getFilteredCharacters(BASE_URL, '').then((data) => {
+        setLastPage(Math.ceil(data.length / 50));
+      });
+    }
+  }, [isFilteredCharacters]);
 
-      setCharacters(data.slice(0, 50));
-    });
-  }, [searchValue]);
+  useEffect(() => {
+    searchValue &&
+      getFilteredCharacters(BASE_URL, searchValue).then((data) => {
+        setIsFilteredCharacters(true);
+        console.log(data);
+        setLastPage(Math.ceil(data.length / 50));
+        setCharacters(data.slice((currentPage - 1) * 50, currentPage * 50));
+      });
+  }, [currentPage, isFilteredCharacters, searchValue]);
 
   function searchCharacters(value: string) {
+    setCarrentPage(1);
     setSearchValue(value);
   }
 
   return (
     <div className="main__container">
       <Search searchCharacters={searchCharacters} />
-      <div className="characters">
-        {characters.length ? (
-          characters.map((character) => (
-            <Card key={v1()} character={character} />
-          ))
-        ) : (
-          <div>Ничего не найдено</div>
-        )}
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        lastPage={lastPage}
+        loading={loading}
+        characters={characters}
+        nextPage={nextPage}
+        perPage={perPage}
+      />
     </div>
   );
 }

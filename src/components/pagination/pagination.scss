@@ -1,0 +1,20 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  &__btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    color: #006e99;
+    font-family: 'Walter Turncoat', cursive;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    &:disabled {
+      cursor: auto;
+    }
+  }
+}

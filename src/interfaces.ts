@@ -36,5 +36,5 @@ export enum ERROR_MESSAGE {
   inputRadio = 'Please, choose your sex',
   inputFile = 'Please, upload file ',
   inputCheckbox = 'Please, confirm card creation',
-  search = 'Please, enter least 4 characters',
+  search = 'Please, enter least 2 characters',
 }

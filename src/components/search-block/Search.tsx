@@ -27,8 +27,6 @@ export function Search({
   }
 
   function handleSubmit1({ search }: { search: string }) {
-    console.log(search);
-
     searchCharacters(search);
   }
 
@@ -46,7 +44,7 @@ export function Search({
         onInput={handleInputValue}
         {...register('search', {
           required: true,
-          minLength: 4,
+          minLength: 2,
         })}
       />
       <div>
