@@ -11,7 +11,22 @@ export function Characters({
   loading: boolean;
   characters: Character[];
 }) {
-  if (loading) return <h2 className="loading">LOADING...</h2>;
+  if (loading)
+    return (
+      <div className="loading">
+        <svg className="spinner" viewBox="0 0 50 50">
+          <circle
+            className="path"
+            cx="25"
+            cy="25"
+            r="20"
+            fill="none"
+            strokeWidth="5"
+          ></circle>
+        </svg>
+        <h2 className="loading__text">loading...</h2>
+      </div>
+    );
   return (
     <div className="characters">
       {characters.map((character) => (
