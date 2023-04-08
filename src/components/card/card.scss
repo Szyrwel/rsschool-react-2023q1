@@ -1,10 +1,10 @@
 .character {
   display: flex;
-  width: 100%;
+  min-width: 100%;
   background-color: rgba(255, 255, 255, 0.75);
   border-radius: 20px;
   padding: 15px 0;
-  font-family: 'Walter Turncoat', cursive;
+  font-family: 'Shojumaru';
   &__link {
     display: flex;
     flex-direction: column;
@@ -26,7 +26,8 @@
   &__title {
     font-size: 25px;
     font-weight: 300;
-    color: #293133;
+    color: #ffffff;
     text-align: center;
+    text-shadow: 1px 1px blueviolet;
   }
 }
