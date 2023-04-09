@@ -2,7 +2,7 @@
   position: relative;
   width: 300px;
   text-align: center;
-  margin: 0 auto 5px;
+  margin: 0 auto 15px;
   &__input {
     width: 300px;
     font-size: 15px;
@@ -18,7 +18,7 @@
   &__button {
     position: absolute;
     top: 50%;
-    transform: translate(0, calc(-50% - 11px));
+    transform: translate(0, -50%);
     right: 3%;
     border: none;
     font-family: 'Walter Turncoat', cursive;
@@ -28,13 +28,5 @@
     font-weight: 100;
     background: linear-gradient(185.18deg, #0066ff 28.51%, #00c2ff 167.59%);
     border-radius: 7px;
-  }
-  &__error {
-    display: block;
-    height: 22px;
-    font-size: 18px;
-    color: #ffffff;
-    font-weight: 700;
-    text-shadow: 1px 1px #af0606;
   }
 }

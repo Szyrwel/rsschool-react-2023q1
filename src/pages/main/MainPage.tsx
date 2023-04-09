@@ -2,19 +2,27 @@ import { Search } from 'components/search-block/Search';
 import React, { useEffect, useState } from 'react';
 import './main-page.scss';
 import { Character } from 'interfaces';
-import { getAllCharacters, getFilteredCharacters } from 'api/Api';
+import {
+  getAllCharacters,
+  getFilteredCharacters,
+  getOneCharacter,
+} from 'api/Api';
 import { BASE_URL } from 'api/constants';
 import { Pagination } from 'components/pagination/Pagination';
+import { PopUp } from 'components/pop-up/PopUp';
 
 export function MainPage() {
   const [searchValue, setSearchValue] = useState(
-    localStorage.getItem('inputValue') || ''
+    localStorage.getItem('search') || ''
   );
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCarrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(0);
   const [isFilteredCharacters, setIsFilteredCharacters] = useState(false);
+  const [chooseCharacter, setChooseCharacter] = useState<Character | null>(
+    null
+  );
   const nextPage = (num: number) => setCarrentPage(num + 1);
   const perPage = (num: number) => setCarrentPage(num - 1);
 
@@ -30,25 +38,37 @@ export function MainPage() {
 
   useEffect(() => {
     if (!isFilteredCharacters) {
+      setLoading(true);
       getFilteredCharacters(BASE_URL, '').then((data) => {
         setLastPage(Math.ceil(data.length / 50));
+        setLoading(false);
       });
     }
   }, [isFilteredCharacters]);
 
   useEffect(() => {
-    searchValue &&
-      getFilteredCharacters(BASE_URL, searchValue).then((data) => {
-        setIsFilteredCharacters(true);
-        console.log(data);
-        setLastPage(Math.ceil(data.length / 50));
-        setCharacters(data.slice((currentPage - 1) * 50, currentPage * 50));
-      });
+    searchValue && setLoading(true);
+    getFilteredCharacters(BASE_URL, searchValue).then((data) => {
+      setIsFilteredCharacters(true);
+      setLastPage(Math.ceil(data.length / 50));
+      setCharacters(data.slice((currentPage - 1) * 50, currentPage * 50));
+      setLoading(false);
+    });
   }, [currentPage, isFilteredCharacters, searchValue]);
 
   function searchCharacters(value: string) {
     setCarrentPage(1);
     setSearchValue(value);
+  }
+
+  function getIdCharacters(id: number) {
+    getOneCharacter(BASE_URL, id).then((data) => {
+      setChooseCharacter(data);
+    });
+  }
+
+  function closeModal() {
+    setChooseCharacter(null);
   }
 
   return (
@@ -61,7 +81,11 @@ export function MainPage() {
         characters={characters}
         nextPage={nextPage}
         perPage={perPage}
+        getIdCharacters={getIdCharacters}
       />
+      {chooseCharacter && (
+        <PopUp chooseCharacter={chooseCharacter} closeModal={closeModal} />
+      )}
     </div>
   );
 }

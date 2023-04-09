@@ -10,13 +10,21 @@ type PaginationProps = {
   characters: Character[];
   nextPage: (num: number) => void;
   perPage: (num: number) => void;
+  getIdCharacters: (id: number) => void;
 };
 
 export function Pagination(props: PaginationProps) {
   const symbolperPage = '<';
   const symbolNextPage = '>';
-  const { currentPage, lastPage, loading, characters, nextPage, perPage } =
-    props;
+  const {
+    currentPage,
+    lastPage,
+    loading,
+    characters,
+    nextPage,
+    perPage,
+    getIdCharacters,
+  } = props;
 
   return (
     <>
@@ -53,7 +61,11 @@ export function Pagination(props: PaginationProps) {
           {symbolNextPage}
         </button>
       </div>
-      <Characters loading={loading} characters={characters} />
+      <Characters
+        loading={loading}
+        characters={characters}
+        getIdCharacters={getIdCharacters}
+      />
     </>
   );
 }

@@ -7,9 +7,11 @@ import './characters.scss';
 export function Characters({
   loading,
   characters,
+  getIdCharacters,
 }: {
   loading: boolean;
   characters: Character[];
+  getIdCharacters: (id: number) => void;
 }) {
   if (loading)
     return (
@@ -30,7 +32,11 @@ export function Characters({
   return (
     <div className="characters">
       {characters.map((character) => (
-        <Card key={v1()} character={character} />
+        <Card
+          key={v1()}
+          character={character}
+          getIdCharacters={getIdCharacters}
+        />
       ))}
     </div>
   );
