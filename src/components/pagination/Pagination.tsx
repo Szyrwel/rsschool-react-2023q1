@@ -66,6 +66,9 @@ export function Pagination(props: PaginationProps) {
         characters={characters}
         getIdCharacters={getIdCharacters}
       />
+      {!characters.length ? (
+        <div className="about">Sorry, characters not found...</div>
+      ) : null}
     </>
   );
 }
