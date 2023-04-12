@@ -27,6 +27,7 @@ export type ResponseModel = {
 export enum ENDPOINT {
   allCharacters = '/characters',
   filterCharacters = '/character?name=',
+  oneCharacter = '/character',
 }
 
 export enum ERROR_MESSAGE {

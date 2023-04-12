@@ -28,6 +28,8 @@ export async function getOneCharacter(
   url: string,
   id: number
 ): Promise<Character> {
-  const res = await fetch(`${url}${ENDPOINT.allCharacters}/${id}`);
-  return await res.json();
+  const res = await fetch(`${url}${ENDPOINT.oneCharacter}/${id}`);
+  const data = await res.json();
+
+  return data.data;
 }
