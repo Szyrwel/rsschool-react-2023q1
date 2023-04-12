@@ -47,13 +47,15 @@ export function MainPage() {
   }, [isFilteredCharacters]);
 
   useEffect(() => {
-    searchValue && setLoading(true);
-    getFilteredCharacters(BASE_URL, searchValue).then((data) => {
-      setIsFilteredCharacters(true);
-      setLastPage(Math.ceil(data.length / 50));
-      setCharacters(data.slice((currentPage - 1) * 50, currentPage * 50));
-      setLoading(false);
-    });
+    if (searchValue) {
+      setLoading(true);
+      getFilteredCharacters(BASE_URL, searchValue).then((data) => {
+        setIsFilteredCharacters(true);
+        setLastPage(Math.ceil(data.length / 50));
+        setCharacters(data.slice((currentPage - 1) * 50, currentPage * 50));
+        setLoading(false);
+      });
+    }
   }, [currentPage, isFilteredCharacters, searchValue]);
 
   function searchCharacters(value: string) {
