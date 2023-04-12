@@ -1,0 +1,32 @@
+.search {
+  position: relative;
+  width: 300px;
+  text-align: center;
+  margin: 0 auto 15px;
+  &__input {
+    width: 300px;
+    font-size: 15px;
+    padding: 10px;
+    border: 1px solid #cecece;
+    background: #f6f6f6;
+    border-radius: 8px;
+    &:focus {
+      box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.4);
+      outline: none;
+    }
+  }
+  &__button {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 3%;
+    border: none;
+    font-family: 'Walter Turncoat', cursive;
+    font-size: 9px;
+    padding: 5px 10px;
+    color: #ffffff;
+    font-weight: 100;
+    background: linear-gradient(185.18deg, #0066ff 28.51%, #00c2ff 167.59%);
+    border-radius: 7px;
+  }
+}

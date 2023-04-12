@@ -1,0 +1,37 @@
+.character {
+  display: flex;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  padding: 15px 0;
+  font-family: 'Walter Turncoat', cursive;
+  cursor: pointer;
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 15px;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 15px;
+  }
+
+  &__image {
+    width: 100%;
+    max-width: 300px;
+    height: 150px;
+    object-fit: contain;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 300;
+    color: #293133;
+    text-align: center;
+  }
+  &:hover {
+    transform: scale(1.05);
+    transition: 1s;
+  }
+}

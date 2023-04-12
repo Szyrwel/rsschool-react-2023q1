@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  display: block;
+  background: url('https://funart.pro/uploads/posts/2022-08/1659731030_3-funart-pro-p-fon-disnei-krasivo-3.jpg')
+    no-repeat;
+  background-position: 50% 80px;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: calc(100vh - 80px);
+}
+.main__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 40px;
+}
+
+.characters {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px 20px;
+  margin-top: 20px;
+}
