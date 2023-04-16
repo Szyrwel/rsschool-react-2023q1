@@ -1,5 +1,6 @@
 import { Search } from 'components/search-block/Search';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux/es/exports';
 import './main-page.scss';
 import { Character } from 'interfaces';
 import {
@@ -10,11 +11,14 @@ import {
 import { BASE_URL } from 'api/constants';
 import { Pagination } from 'components/pagination/Pagination';
 import { PopUp } from 'components/pop-up/PopUp';
+import { handleSearchValue } from 'store/searchValueSlice';
 
 export function MainPage() {
-  const [searchValue, setSearchValue] = useState(
-    localStorage.getItem('search') || ''
-  );
+  const dispatch = useDispatch();
+
+  // const [searchValue, setSearchValue] = useState(
+  //   localStorage.getItem('search') || ''
+  // );
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCarrentPage] = useState(1);
@@ -36,31 +40,33 @@ export function MainPage() {
     }
   }, [currentPage, isFilteredCharacters]);
 
-  useEffect(() => {
-    if (!isFilteredCharacters) {
-      setLoading(true);
-      getFilteredCharacters(BASE_URL, '').then((data) => {
-        setLastPage(Math.ceil(data.length / 50));
-        setLoading(false);
-      });
-    }
-  }, [isFilteredCharacters]);
+  // useEffect(() => {
+  //   if (!isFilteredCharacters && searchValue) {
+  //     setLoading(true);
+  //     getFilteredCharacters(BASE_URL, '').then((data) => {
+  //       setLastPage(Math.ceil(data.length / 50));
+  //       setLoading(false);
+  //     });
+  //   }
+  // }, [isFilteredCharacters, searchValue]);
 
-  useEffect(() => {
-    if (searchValue) {
-      setLoading(true);
-      getFilteredCharacters(BASE_URL, searchValue).then((data) => {
-        setIsFilteredCharacters(true);
-        setLastPage(Math.ceil(data.length / 50));
-        setCharacters(data.slice((currentPage - 1) * 50, currentPage * 50));
-        setLoading(false);
-      });
-    }
-  }, [currentPage, isFilteredCharacters, searchValue]);
+  // useEffect(() => {
+  //   if (searchValue) {
+  //     setLoading(true);
+  //     getFilteredCharacters(BASE_URL, searchValue).then((data) => {
+  //       setIsFilteredCharacters(true);
+  //       setLastPage(Math.ceil(data.length / 50));
+  //       setCharacters(data.slice((currentPage - 1) * 50, currentPage * 50));
+  //       setLoading(false);
+  //     });
+  //   }
+  // }, [currentPage, isFilteredCharacters, searchValue]);
 
   function searchCharacters(value: string) {
     setCarrentPage(1);
-    setSearchValue(value);
+    // setSearchValue(value);
+    dispatch(handleSearchValue(value));
+    console.log(1);
   }
 
   function getIdCharacters(id: number) {
