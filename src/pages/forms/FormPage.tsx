@@ -1,21 +1,24 @@
 import { FormCardList } from 'components/form-card-list/FormCardList';
 import { Form } from 'components/form/Form';
-import React, { useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'hook';
+import React from 'react';
+import { addCard, selectCards } from 'store/formSlice';
+
 import './form-page.scss';
-import { Card, FormField } from './interface';
+import { FormField } from './interface';
 
 export function FormPage() {
-  const [formCards, setFormCards] = useState<Card[]>([]);
+  const formCards = useAppSelector(selectCards);
+  const dispatch = useAppDispatch();
 
   const addCardsToFormCards = (data: FormField) => {
     if (data?.pathToAvatar?.[0]) {
-      setFormCards([
-        ...formCards,
-        {
+      dispatch(
+        addCard({
           ...data,
           pathToAvatar: URL.createObjectURL(data.pathToAvatar?.[0]),
-        },
-      ]);
+        })
+      );
     }
   };
 
