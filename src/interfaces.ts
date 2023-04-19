@@ -20,15 +20,20 @@ export interface Character {
 
 export type ResponseModel = {
   data: Character[];
-  count: number;
-  totalPages: number;
-  nextPage: string;
+  info: InfoResponseModel;
 };
 export enum ENDPOINT {
   allCharacters = '/characters',
   filterCharacters = '/character?name=',
   oneCharacter = '/character',
 }
+
+type InfoResponseModel = {
+  count: number;
+  totalPages: number;
+  previousPage: string;
+  nextPage: string;
+};
 
 export enum ERROR_MESSAGE {
   inputText = 'Please, enter your name',

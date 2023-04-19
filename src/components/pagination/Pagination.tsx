@@ -2,7 +2,13 @@ import { Characters } from 'components/card-list/Characters';
 import { useAppDispatch, useAppSelector } from 'hook';
 import { Character } from 'interfaces';
 import React from 'react';
-import { fetchCharacters, nextPage, perPage } from 'store/searchValueSlice';
+import {
+  fetchCharacters,
+  lastPage,
+  nextPage,
+  perPage,
+  startPage,
+} from 'store/searchValueSlice';
 import './pagination.scss';
 
 type PaginationProps = {
@@ -17,15 +23,25 @@ export function Pagination(props: PaginationProps) {
   const symbolNextPage = '>';
   const { loading, characters, getIdCharacters } = props;
   const dispatch = useAppDispatch();
-  const { currentPage } = useAppSelector((state) => state.search);
+  const { currentPage, totalPages } = useAppSelector((state) => state.search);
 
-  function changePageUp() {
+  function goToNextPage() {
     dispatch(nextPage());
     dispatch(fetchCharacters());
   }
 
-  function changePageDown() {
+  function goToPrevPage() {
     dispatch(perPage());
+    dispatch(fetchCharacters());
+  }
+
+  function goToStartPage() {
+    dispatch(startPage());
+    dispatch(fetchCharacters());
+  }
+
+  function goToLastPage() {
+    dispatch(lastPage());
     dispatch(fetchCharacters());
   }
 
@@ -35,17 +51,32 @@ export function Pagination(props: PaginationProps) {
         <button
           className="pagination__btn"
           disabled={currentPage === 1}
-          onClick={() => changePageDown()}
+          onClick={() => goToStartPage()}
+        >
+          {symbolPerPage}
+          {symbolPerPage}
+        </button>
+        <button
+          className="pagination__btn"
+          disabled={currentPage === 1}
+          onClick={() => goToPrevPage()}
         >
           {symbolPerPage}
         </button>
         <button className="pagination__btn">{currentPage}</button>
         <button
           className="pagination__btn"
-          onClick={() => changePageUp()}
-
-          // disabled={currentPage === lastPage}
+          onClick={() => goToNextPage()}
+          disabled={currentPage === totalPages}
         >
+          {symbolNextPage}
+        </button>
+        <button
+          className="pagination__btn"
+          onClick={() => goToLastPage()}
+          disabled={currentPage === totalPages}
+        >
+          {symbolNextPage}
           {symbolNextPage}
         </button>
       </div>

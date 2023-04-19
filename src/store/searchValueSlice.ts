@@ -1,18 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAllCharacters } from 'api/Api';
 import { BASE_URL } from 'api/constants';
-import { Character } from 'interfaces';
+import { Character, ResponseModel } from 'interfaces';
 import { RootState } from 'store';
 
 export const fetchCharacters = createAsyncThunk<
-  Character[],
+  ResponseModel,
   undefined,
   { state: RootState }
 >(
   'searchValue/getAllCharacters',
   async function (_, { rejectWithValue, getState }) {
+    const { currentPage } = getState().search;
     try {
-      const { currentPage } = getState().search;
       return await getAllCharacters(BASE_URL, currentPage);
     } catch (error) {
       if (error instanceof Error) {
@@ -27,6 +27,7 @@ type searchValueState = {
   characters: Character[];
   currentPage: number;
   loading: boolean;
+  totalPages: number;
 };
 
 const initialState: searchValueState = {
@@ -34,6 +35,7 @@ const initialState: searchValueState = {
   characters: [],
   currentPage: 1,
   loading: false,
+  totalPages: 149,
 };
 
 const searchValueSlice = createSlice({
@@ -49,11 +51,17 @@ const searchValueSlice = createSlice({
     perPage(state) {
       state.currentPage -= 1;
     },
+    startPage(state) {
+      state.currentPage = 1;
+    },
+    lastPage(state) {
+      if (state.totalPages) state.currentPage = state.totalPages;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCharacters.fulfilled, (state, action) => {
       state.loading = false;
-      state.characters = action.payload;
+      state.characters = action.payload.data;
     });
     builder.addCase(fetchCharacters.pending, (state) => {
       state.loading = true;
@@ -61,6 +69,6 @@ const searchValueSlice = createSlice({
   },
 });
 
-export const { handleSearchValue, nextPage, perPage } =
+export const { handleSearchValue, nextPage, perPage, startPage, lastPage } =
   searchValueSlice.actions;
 export default searchValueSlice.reducer;
