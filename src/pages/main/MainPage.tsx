@@ -18,8 +18,6 @@ export function MainPage() {
   const [chooseCharacter, setChooseCharacter] = useState<Character | null>(
     null
   );
-  // const nextPage = (num: number) => setCarrentPage(num + 1);
-  // const perPage = (num: number) => setCarrentPage(num - 1);
 
   useEffect(() => {
     dispatch(fetchCharacters());
@@ -68,8 +66,6 @@ export function MainPage() {
         currentPage={currentPage}
         loading={loading}
         characters={characters}
-        // nextPage={nextPage}
-        // perPage={perPage}
         getIdCharacters={getIdCharacters}
       />
       {chooseCharacter && (

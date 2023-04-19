@@ -43,8 +43,11 @@ const searchValueSlice = createSlice({
     handleSearchValue(state, action: PayloadAction<string>) {
       state.search = action.payload;
     },
-    changePageUp(state) {
+    nextPage(state) {
       state.currentPage += 1;
+    },
+    perPage(state) {
+      state.currentPage -= 1;
     },
   },
   extraReducers: (builder) => {
@@ -58,5 +61,6 @@ const searchValueSlice = createSlice({
   },
 });
 
-export const { handleSearchValue, changePageUp } = searchValueSlice.actions;
+export const { handleSearchValue, nextPage, perPage } =
+  searchValueSlice.actions;
 export default searchValueSlice.reducer;

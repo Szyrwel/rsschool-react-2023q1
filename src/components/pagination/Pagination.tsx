@@ -1,28 +1,33 @@
 import { Characters } from 'components/card-list/Characters';
+import { useAppDispatch, useAppSelector } from 'hook';
 import { Character } from 'interfaces';
 import React from 'react';
+import { fetchCharacters, nextPage, perPage } from 'store/searchValueSlice';
 import './pagination.scss';
 
 type PaginationProps = {
-  currentPage: number;
   loading: boolean;
+  currentPage: number;
   characters: Character[];
-  // nextPage: (num: number) => void;
-  // perPage: (num: number) => void;
   getIdCharacters: (id: number) => void;
 };
 
 export function Pagination(props: PaginationProps) {
   const symbolPerPage = '<';
   const symbolNextPage = '>';
-  const {
-    currentPage,
-    loading,
-    characters,
-    // nextPage,
-    // perPage,
-    getIdCharacters,
-  } = props;
+  const { loading, characters, getIdCharacters } = props;
+  const dispatch = useAppDispatch();
+  const { currentPage } = useAppSelector((state) => state.search);
+
+  function changePageUp() {
+    dispatch(nextPage());
+    dispatch(fetchCharacters());
+  }
+
+  function changePageDown() {
+    dispatch(perPage());
+    dispatch(fetchCharacters());
+  }
 
   return (
     <>
@@ -30,14 +35,15 @@ export function Pagination(props: PaginationProps) {
         <button
           className="pagination__btn"
           disabled={currentPage === 1}
-          // onClick={() => perPage(currentPage)}
+          onClick={() => changePageDown()}
         >
           {symbolPerPage}
         </button>
         <button className="pagination__btn">{currentPage}</button>
         <button
           className="pagination__btn"
-          // onClick={() => nextPage(currentPage)}
+          onClick={() => changePageUp()}
+
           // disabled={currentPage === lastPage}
         >
           {symbolNextPage}
