@@ -1,44 +1,29 @@
 import { Search } from 'components/search-block/Search';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux/es/exports';
 import './main-page.scss';
 import { Character } from 'interfaces';
-import {
-  getAllCharacters,
-  getFilteredCharacters,
-  getOneCharacter,
-} from 'api/Api';
+import { getOneCharacter } from 'api/Api';
 import { BASE_URL } from 'api/constants';
 import { Pagination } from 'components/pagination/Pagination';
 import { PopUp } from 'components/pop-up/PopUp';
-import { handleSearchValue } from 'store/searchValueSlice';
+import { fetchCharacters, handleSearchValue } from 'store/searchValueSlice';
+import { useAppDispatch, useAppSelector } from 'hook';
 
 export function MainPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { characters, loading, currentPage } = useAppSelector(
+    (state) => state.search
+  );
 
-  // const [searchValue, setSearchValue] = useState(
-  //   localStorage.getItem('search') || ''
-  // );
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCarrentPage] = useState(1);
-  const [lastPage, setLastPage] = useState(0);
-  const [isFilteredCharacters, setIsFilteredCharacters] = useState(false);
   const [chooseCharacter, setChooseCharacter] = useState<Character | null>(
     null
   );
-  const nextPage = (num: number) => setCarrentPage(num + 1);
-  const perPage = (num: number) => setCarrentPage(num - 1);
+  // const nextPage = (num: number) => setCarrentPage(num + 1);
+  // const perPage = (num: number) => setCarrentPage(num - 1);
 
   useEffect(() => {
-    if (!isFilteredCharacters) {
-      setLoading(true);
-      getAllCharacters(BASE_URL, currentPage).then((data) => {
-        setCharacters(data);
-        setLoading(false);
-      });
-    }
-  }, [currentPage, isFilteredCharacters]);
+    dispatch(fetchCharacters());
+  }, [dispatch]);
 
   // useEffect(() => {
   //   if (!isFilteredCharacters && searchValue) {
@@ -63,10 +48,7 @@ export function MainPage() {
   // }, [currentPage, isFilteredCharacters, searchValue]);
 
   function searchCharacters(value: string) {
-    setCarrentPage(1);
-    // setSearchValue(value);
     dispatch(handleSearchValue(value));
-    console.log(1);
   }
 
   function getIdCharacters(id: number) {
@@ -84,11 +66,10 @@ export function MainPage() {
       <Search searchCharacters={searchCharacters} />
       <Pagination
         currentPage={currentPage}
-        lastPage={lastPage}
         loading={loading}
         characters={characters}
-        nextPage={nextPage}
-        perPage={perPage}
+        // nextPage={nextPage}
+        // perPage={perPage}
         getIdCharacters={getIdCharacters}
       />
       {chooseCharacter && (
